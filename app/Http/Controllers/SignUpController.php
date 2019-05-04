@@ -21,6 +21,10 @@ class SignUpController extends Controller
 
     public function signup()
     {
+
+      $local_server = "http://localhost:8080/";
+      $heroku_server = "https://footycal-server.herokuapp.com/";
+
       $user = new User();
       $user->email = request('email');
       $user->password = Hash::make(request('password')); // bcrypt encrytion method
@@ -31,13 +35,13 @@ class SignUpController extends Controller
       // create user on mongo database (post request to node server)
       $client = new Client();
 
-      $client->request('POST', 'http://localhost:8080/auth/create_user', [
+      $client->request('POST', $heroku_server . 'auth/create_user', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
       ]);
 
       // get an access token and save it in the session
       $client = new Client();
-      $res = $client->request('POST', 'http://localhost:8080/auth/token', [
+      $res = $client->request('POST', $heroku_server . 'auth/token', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
       ]);
 

@@ -14,6 +14,9 @@ class LoginController extends Controller
     }
 
     public function login(){
+      $local_server = "http://localhost:8080/";
+      $heroku_server = "https://footycal-server.herokuapp.com/";
+
       $loginWasSuccessful = Auth::attempt([
         'email'=> request('email'),
         'password'=> request('password')
@@ -23,7 +26,7 @@ class LoginController extends Controller
         // get new access token
         $user = Auth::user();
         $client = new Client();
-        $res = $client->request('POST', 'http://localhost:8080/auth/token', [
+        $res = $client->request('POST', $heroku_server . 'auth/token', [
           'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
         ]);
 
@@ -39,7 +42,7 @@ class LoginController extends Controller
         $client = new Client([
             'headers' => $headers
         ]);
-        $res = $client->request('GET', 'http://localhost:8080/api/user', [
+        $res = $client->request('GET', $heroku_server . 'api/user', [
           'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
         ]);
 

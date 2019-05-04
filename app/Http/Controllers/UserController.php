@@ -12,6 +12,9 @@ use Auth;
 
 class UserController extends Controller
 {
+  var $local_server = "http://localhost:8080/";
+  var $heroku_server = "https://footycal-server.herokuapp.com/";
+
   public function index(){
 
     // 1. get all teams
@@ -23,7 +26,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $res = $client->request('GET', 'http://localhost:8080/api/allteams', [
+    $res = $client->request('GET', $heroku_server . 'api/allteams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
@@ -67,7 +70,7 @@ class UserController extends Controller
       $client = new Client([
           'headers' => $headers
       ]);
-      $res = $client->request('PATCH', 'http://localhost:8080/api/update_user_teams', [
+      $res = $client->request('PATCH', $heroku_server .  'api/update_user_teams', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password, 'teams' => $myteams]
       ]);
 
@@ -91,7 +94,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $client->request('delete', 'http://localhost:8080/api/delete_teams', [
+    $client->request('delete', $heroku_server . 'api/delete_teams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
