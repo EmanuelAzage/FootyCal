@@ -12,10 +12,10 @@ use Auth;
 
 class UserController extends Controller
 {
-  var $local_server = "http://localhost:8080/";
-  var $heroku_server = "https://footycal-server.herokuapp.com/";
 
   public function index(){
+    $local_server = "http://localhost:8080/";
+    $heroku_server = "https://footycal-server.herokuapp.com/";
 
     // 1. get all teams
     $user = Auth::user();
@@ -26,7 +26,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $res = $client->request('GET', $this->$heroku_server . 'api/allteams', [
+    $res = $client->request('GET', $heroku_server . 'api/allteams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
@@ -46,6 +46,9 @@ class UserController extends Controller
   }
 
   public function updateTeams(Request $request){
+    $local_server = "http://localhost:8080/";
+    $heroku_server = "https://footycal-server.herokuapp.com/";
+
     // update teams list
     $selected_teams = $request->selected_teams;
 
@@ -70,7 +73,7 @@ class UserController extends Controller
       $client = new Client([
           'headers' => $headers
       ]);
-      $res = $client->request('PATCH', $this->$heroku_server .  'api/update_user_teams', [
+      $res = $client->request('PATCH', $heroku_server .  'api/update_user_teams', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password, 'teams' => $myteams]
       ]);
 
@@ -82,6 +85,9 @@ class UserController extends Controller
   }
 
   public function removeTeams(Request $request){
+    $local_server = "http://localhost:8080/";
+    $heroku_server = "https://footycal-server.herokuapp.com/";
+
     // reset teams list
     session(['myteams' => []]);
 
@@ -94,7 +100,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $client->request('delete', $this->$heroku_server . 'api/delete_teams', [
+    $client->request('delete', $heroku_server . 'api/delete_teams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
