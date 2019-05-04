@@ -26,7 +26,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $res = $client->request('GET', $heroku_server . 'api/allteams', [
+    $res = $client->request('GET', $this->$heroku_server . 'api/allteams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
@@ -70,7 +70,7 @@ class UserController extends Controller
       $client = new Client([
           'headers' => $headers
       ]);
-      $res = $client->request('PATCH', $heroku_server .  'api/update_user_teams', [
+      $res = $client->request('PATCH', $this->$heroku_server .  'api/update_user_teams', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password, 'teams' => $myteams]
       ]);
 
@@ -94,7 +94,7 @@ class UserController extends Controller
     $client = new Client([
         'headers' => $headers
     ]);
-    $client->request('delete', $heroku_server . 'api/delete_teams', [
+    $client->request('delete', $this->$heroku_server . 'api/delete_teams', [
       'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
     ]);
 
