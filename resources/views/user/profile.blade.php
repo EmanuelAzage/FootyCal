@@ -6,7 +6,7 @@
 
 <h1> Welcome to FootyCal, update teams below. </h1>
 <br><br>
-<p1>Command click for multiple selection.</p1>
+<p1>Command click for multiple selection. Select all teams you want to moniter.</p1>
 
 <form action="/profile" method="post">
   @csrf
