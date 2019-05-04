@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Http\Request;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 
 use App\User;
 use Hash;
 use Auth;
+use Validator;
 
 class SignUpController extends Controller
 {
@@ -19,11 +19,25 @@ class SignUpController extends Controller
       return view('signup');
     }
 
-    public function signup()
+    public function signup(Request $request)
     {
 
       $local_server = "http://localhost:8080/";
       $heroku_server = "https://footycal-server.herokuapp.com/";
+
+      // validate input
+      $input = $request->all();
+      $validation = Validator::make($input, [
+        'email' => 'required|min:6',
+        'password' => 'required|min:4'
+      ]);
+
+      // if validation fails, redirect back to form with odbc_errors
+      if ($validation->fails()){
+        return redirect('/signup')
+          ->withInput()
+          ->withErrors($validation);
+      }
 
       $user = new User();
       $user->email = request('email');

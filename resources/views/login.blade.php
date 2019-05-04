@@ -9,11 +9,13 @@
     @csrf
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" class="form-control">
+      <input type="email" id="email" name="email" class="form-control" value="{{old('email')}}">
+      <small class="text-danger">{{$errors->first('email')}}</small>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" class="form-control">
+      <input type="password" id="password" name="password" class="form-control" value="{{old('password')}}">
+      <small class="text-danger">{{$errors->first('password')}}</small>
     </div>
     <input type="submit" value="Login" class="btn btn-primary">
   </form>
