@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as HttpRequest;
+
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+
 use App\User;
 use Hash;
 use Auth;
@@ -23,7 +28,22 @@ class SignUpController extends Controller
 
       Auth::login($user);
 
-      // TODO create user on mongo database (post request to node server)
+      // create user on mongo database (post request to node server)
+      $client = new Client();
+
+      client->request('POST', 'http://localhost:8080/auth/create_user', [
+        'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
+      ]);
+
+      // get an access token and save it in the session
+      $client = new Client();
+      $res = $client->request('POST', 'http://localhost:8080/auth/token', [
+        'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
+      ]);
+
+      $token = json_decode($res->getBody()->getContents())->token;
+
+      session(['token' => $token]);
 
       return redirect('/profile');
     }

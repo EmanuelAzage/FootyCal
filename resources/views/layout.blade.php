@@ -21,9 +21,8 @@
       <ul class="nav navbar-nav">
         @if (Auth::check())
           <li {{strpos(Request::url(), 'upcoming') ? "class=active" : ""}}><a href="/upcoming">Upcoming Matches</a></li>
-          <li {{strpos(Request::url(), 'results') ? "class=active" : ""}}><a href="/results">Match Results</a></li>
-          <li ><a href="/logout">logout</a></li>
           <li {{strpos(Request::url(), 'profile') ? "class=active" : ""}}><a href="/profile">profile</a></li>
+          <li ><a href="/logout">logout</a></li>
         @else
           <li {{strpos(Request::url(), 'login') ? "class=active" : ""}}><a href="/login">login</a></li>
           <li {{strpos(Request::url(), 'signup') ? "class=active" : ""}}><a href="/signup">signup</a></li>

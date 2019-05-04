@@ -26,4 +26,8 @@ Route::post('/signup', 'SignUpController@signup');
 // authenticated routes
 Route::middleware(['authenticated'])->group(function(){
   Route::get('/profile', 'UserController@index');
+  Route::post('/profile', 'UserController@updateTeams');
+  Route::post('/delete_teams', 'UserController@removeTeams');
+
+  Route::get('/upcoming', 'UpcomingMatchesController@index');
 });
