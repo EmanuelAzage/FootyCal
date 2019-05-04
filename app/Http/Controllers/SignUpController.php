@@ -31,7 +31,7 @@ class SignUpController extends Controller
       // create user on mongo database (post request to node server)
       $client = new Client();
 
-      client->request('POST', 'http://localhost:8080/auth/create_user', [
+      $client->request('POST', 'http://localhost:8080/auth/create_user', [
         'json' => ['id' => $user->id, 'email' => $user->email, 'password' =>$user->password]
       ]);
 
