@@ -59,9 +59,14 @@ class LoginController extends Controller
         ]);
         $res = $client->request('GET', $heroku_server . 'api/user/' . $user->id);
 
-        $myteams = json_decode($res->getBody()->getContents())->teams;
+        $json = json_decode($res->getBody()->getContents());
 
-        session(['myteams' => $myteams]);
+        if(isset($json->teams)){
+          session(['myteams' => $json->teams]);
+        }else{
+          session(['myteams' => []]);
+        }
+
 
         return redirect('/profile');
       } else {
