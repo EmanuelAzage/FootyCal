@@ -62,6 +62,7 @@ class SignUpController extends Controller
       $token = json_decode($res->getBody()->getContents())->token;
 
       session(['token' => $token]);
+      session(['myteam' => []]);
 
       return redirect('/profile');
     }
