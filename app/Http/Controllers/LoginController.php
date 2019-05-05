@@ -57,7 +57,7 @@ class LoginController extends Controller
         $client = new Client([
             'headers' => $headers
         ]);
-        $res = $client->request('GET', $heroku_server . 'api/user' . $user->id);
+        $res = $client->request('GET', $heroku_server . 'api/user/' . $user->id);
 
         $myteams = json_decode($res->getBody()->getContents())->teams;
 
